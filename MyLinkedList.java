@@ -1,50 +1,64 @@
 public class MyLinkedList<E>{
 
   public class Node{
-    private int data;
+    private E data;
     private Node next, prev;
 
-    /*A Node constructor that takes in an int value
+    /**A Node constructor that takes in an int value
     *@param value becomes that data value
     *The next and previous nodes are set to null
     */
-    public void Node(E value){
+    public Node(E value){
       data = value;
     }
 
-    /*A Node constructor for single linked dodes
-    *@param alue becomes the data value
+    /**A Node constructor for single linked dodes
+    *@param value becomes the data value
     *@param after becomes the next node which the variable next will reference
     */
-    public void Node(E value, Node after){
+    public Node(E value, Node after){
       data = value;
       next = after;
     }
 
-    /*A Node constructor that takes in an int value and two nodes
+    /**A Node constructor that takes in an int value and two nodes
     *@param value becomes that data value
     *@param before becomes the previous node which the variable prev will reference
     *@param after becomes the next node which the variable next will reference
     */
-    public void Node(E value, Node before, Node after){
+    public Node(E value, Node before, Node after){
       data = value;
       next = after;
       prev = before;
     }
 
-    /*A method that returns the data value of a node*/
-    private int get(){
+    /**A method that returns the data value of a node*/
+    private E get(){
       return data;
     }
 
-    /*A method that sets the data value of a node
+    /**A method that returns the next Node
+    *@return Node
+    */
+    public Node next(){
+      return next;
+    }
+
+    /**A method that returns the previous Node
+    *@return Node
+    */
+    public Node prev(){
+      return prev;
+    }
+
+    /**A method that sets the data value of a node
     *@param value becomes the data value
     */
     public void set(E value){
       data = value;
     }
 
-    /*A method that sets the next node
+    /**A method that sets the next node
     *@param after is the node that the variable next will reference
     */
     public void setNext(Node after){
@@ -58,16 +72,17 @@ public class MyLinkedList<E>{
       prev = before;
     }
 
-    /*A method that returns the data value as a toString*/
+    /**A method that returns the data value as a toString*/
     public String toString(){
       String result = "" + data;
+      return result;
     }
   }
 
   private int length;
   private Node start, end;
 
-  /*A constructor for MyLinkedList
+  /**A constructor for MyLinkedList
   *the length is 0
   *the start and end nodes are empty
   */
@@ -77,7 +92,8 @@ public class MyLinkedList<E>{
     end = null;
   }
 
-  /*A method that returns length
+  /**A method that returns length
+  *@return size
   */
   public int size(){
     return length;
@@ -124,12 +140,12 @@ public class MyLinkedList<E>{
   *@param index is the "index" of the Node
   *index should not be greater than or equal to the length or less than 0
   */
-  public Integer get(int index){
+  public E get(int index){
     if(index >= length || index < 0){ //if the index given is out of bounds
       throw new IndexOutOfBoundsException();
     }
     Node current = getNode(index);
-    return current.getData(); //returns the data
+    return current.get(); //returns the data
   }
 
   /**A method to set a specific node in the linked list to an integer
@@ -137,13 +153,13 @@ public class MyLinkedList<E>{
   *@param value is the new Integer that you want the data to be
   *index should not be greater than or equal to the length or less than 0
   */
-  public Integer set(int index, Integer value){
+  public E set(int index, E value){
     if(index >= length || index < 0){ //if the index given is out of bounds
       throw new IndexOutOfBoundsException();
     }
     Node current = getNode(index);
-    Integer temp = current.getData();
-    current.setData(value); //sets the data value to given integer
+    E temp = current.get();
+    current.set(value); //sets the data value to given integer
     return temp; //returns old data value
   }
 
@@ -151,10 +167,10 @@ public class MyLinkedList<E>{
   *@param value is the Integer value the user is looking for
   *returns true if the Integer is in the list, false otherwise
   */
-  public boolean contains(Integer value){
+  public boolean contains(E value){
     Node current = start;
     for(int i = 0; i < length; i++){ //loops through the list
-      if((current.getData()).equals(value)) return true; //looks for the Integer
+      if((current.get()).equals(value)) return true; //looks for the Integer
       if(i != length-1) current = current.next(); //if the current node is not the last node then make current the next node
     }
     return false;
@@ -165,13 +181,13 @@ public class MyLinkedList<E>{
   *returns the index if the Integer is in the list
   *returns -1 if the Integer isn't in the list
   */
-  public int indexOf(Integer value){
+  public int indexOf(E value){
     if(!contains(value)){ //if the integer is not in the list
       return -1;
     }
     Node current = start;
     for(int i = 0; i < length; i++){ //loops through the list
-      if((current.getData()).equals(value)) return i; //if the data of current is equal to the Integer
+      if((current.get()).equals(value)) return i; //if the data of current is equal to the Integer
       if(i != length-1) current = current.next(); //if the current node is not the last node then make current the next node
     }
     return -1;
@@ -182,7 +198,7 @@ public class MyLinkedList<E>{
   *it shouldn't be greater than the length or less than 0
   *@param value is the Integer of this new Node being added to the list
   */
-  public void add(int index, Integer value){
+  public void add(int index, E value){
     if(index > length || index < 0){ //if the index is out of bounds
       throw new IndexOutOfBoundsException();
     }
@@ -209,25 +225,25 @@ public class MyLinkedList<E>{
   *@param index is the given index of the node to be removed
   *index should be greater than or equal to 0 and less than the length
   */
-  public Integer remove(int index){
+  public E remove(int index){
     if(index >= length || index < 0){ //if the index is out of bounds
       throw new IndexOutOfBoundsException();
     }
-    Integer temp;
+    E temp;
     if(index == 0 && length == 1){ //if the node is the only node...
-      temp = start.getData();
+      temp = start.get();
       start = null; //set start and end to null
       end = null;
       length--;
       return temp;
     }else if(index == 0){ //if the first node is being removed...
-      temp = start.getData();
+      temp = start.get();
       start = start.next(); //make the second node the start node
       start.setPrev(null); //make the new start node forget its previous node
       length--;
       return temp;
     }else if(index == length-1){ //if the last node is being removed...
-      temp = end.getData();
+      temp = end.get();
       end = end.prev(); //make the second to last node the end node
       end.setNext(null); //make the new end node set its next node to null
       length--;
@@ -239,18 +255,19 @@ public class MyLinkedList<E>{
       current.setNext(toLink); //the node before the one removed makes the node after the one removed its next node
       toLink.setPrev(current); //the node after the one removed makes the node before the one removed its previous node
       length--;
-      return toRemove.getData(); //return the Integer removed
+      return toRemove.get(); //return the value removed
     }
   }
 
   /**A method that removes an Integer value
   *@param value is the Integer the user wants to remove
   */
-  public boolean remove(Integer value){
-    if(indexOf(value) == -1){ //if the value is not in the list
+  public boolean remove(E value){
+    int temp = indexOf(value);
+    if(temp == -1){ //if the value is not in the list
       return false;
     }
-    remove(indexOf(value)); //find the index of the Integer and remove it
+    remove(temp); //find the index of the Integer and remove it
     return true;
   }
 
@@ -279,7 +296,7 @@ public class MyLinkedList<E>{
   public String toString(){
     String result = "[";
     for(int i = 0; i < length; i++){
-      result += "" + (getNode(i)).getData();
+      result += "" + (getNode(i)).get();
       if(i != length-1) result += ", ";
     }
     return result + "]";
