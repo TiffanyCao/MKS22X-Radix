@@ -4,6 +4,7 @@ public class Radix{
 
   @SuppressWarnings("unchecked")
   public static void radixsort(int[] data){
+    //System.out.println(toString(data));
     int largest = 0;
     for(int i = 0; i < data.length; i++){
       if(Math.abs(data[i]) > 0) largest = Math.abs(data[i]);
@@ -17,7 +18,7 @@ public class Radix{
     //System.out.println(numDigits);
 
     int place = 10;
-    MyLinkedList<Integer>[] buckets = new MyLinkedList[19];
+    MyLinkedList<Integer>[] buckets = new MyLinkedList[20];
     for(int i = 0; i < buckets.length; i++){
       buckets[i] = new MyLinkedList<Integer>();
     }
@@ -46,7 +47,7 @@ public class Radix{
     place = place * 10;
     while(numDigits != 0){
       //System.out.println("place: " + place);
-      buckets = new MyLinkedList[19];
+      buckets = new MyLinkedList[20];
       for(int i = 0; i < buckets.length; i++){
         buckets[i] = new MyLinkedList<Integer>();
       }
@@ -94,5 +95,10 @@ public class Radix{
     System.out.println(toString(data));
     radixsort(data);
     System.out.println(toString(data));
+
+    int[] data1 = {10002, 23124, 187123178, -1721678181, -12383127, -13184728, 19327272};
+    System.out.println(toString(data1));
+    radixsort(data1);
+    System.out.println(toString(data1));
   }
 }
