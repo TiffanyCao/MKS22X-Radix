@@ -51,6 +51,16 @@ public class Radix{
       for(int i = 0; i < buckets.length; i++){
         buckets[i] = new MyLinkedList<Integer>();
       }
+      while(first.hasNext()){
+        int temp = first.next();
+        int toAdd = Math.abs((temp % place) / (place / 10));
+        if(temp < 0){
+          buckets[9 - toAdd].add(temp);
+        }else{
+          buckets[10 + toAdd].add(temp);
+        }
+      }
+      /*
       for(int i = 0; i < first.size(); i++){
         int temp = Math.abs((first.get(i) % place) / (place / 10));
         //System.out.println("temp@" + i + ": " + temp);
@@ -64,6 +74,7 @@ public class Radix{
           //System.out.println("list@" + (10+temp) + ": " + list);
         }
       }
+      */
       place = place * 10;
       MyLinkedList<Integer> newData = buckets[0];
       for(int i = 1; i < buckets.length; i++){
