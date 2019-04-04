@@ -81,6 +81,8 @@ public class MyLinkedList<E>{
 
   private int length;
   private Node start, end;
+  private int current;
+  private Node atCurrent;
 
   /**A constructor for MyLinkedList
   *the length is 0
@@ -90,6 +92,7 @@ public class MyLinkedList<E>{
     length = 0;
     start = null;
     end = null;
+    current = 0;
   }
 
   /**A method that returns length
@@ -105,7 +108,39 @@ public class MyLinkedList<E>{
     length = 0;
     start = null;
     end = null;
+    current = 0;
   }
+
+  public void clearIter(){
+    current = 0;
+  }
+
+  public int getCurrent(){
+    return current;
+  }
+
+  public boolean hasNext(){
+    if(current < this.size()){
+      return true;
+    }
+    return false;
+  }
+
+  public E getatCurrent(){
+    return atCurrent.get();
+  }
+
+  public E next(){
+    current++;
+    if(current == this.size()){
+      return atCurrent.get();
+    }else{
+      atCurrent = atCurrent.next;
+      Node temp = atCurrent.prev;
+      return temp.get();
+    }
+  }
+
 
   /**A method to get the nth node in the list
   *@param index is the index of the node wanted
@@ -127,6 +162,7 @@ public class MyLinkedList<E>{
     Node temp = new Node(value); //creates a new node
     if(length == 0){ //if this is the first node...
       start = temp; //label it as start
+      atCurrent = start;
     }else{
       temp.setPrev(end); //else set the previous end node to this node's prev
       end.setNext(temp); //make the previous end node set its next to this node
@@ -234,6 +270,8 @@ public class MyLinkedList<E>{
       temp = start.get();
       start = null; //set start and end to null
       end = null;
+      atCurrent = null;
+      current = 0;
       length--;
       return temp;
     }else if(index == 0){ //if the first node is being removed...
@@ -289,6 +327,9 @@ public class MyLinkedList<E>{
     other.length = 0; //clear out the other list;
     other.start = null; //make the other list's start and end null
     other.end = null;
+    other.current = 0;
+    this.current = 0;
+    this.atCurrent = start;
   }
 
   /*A method that lists all the data values of the nodes in the linked list
@@ -300,6 +341,21 @@ public class MyLinkedList<E>{
       if(i != length-1) result += ", ";
     }
     return result + "]";
+  }
+
+  public static void main(String[] args) {
+    MyLinkedList<Integer> test = new MyLinkedList<Integer>();
+    test.add(1);
+    test.add(2);
+    test.add(3);
+    test.add(4);
+    test.add(5);
+    test.add(6);
+    test.add(7);
+    test.add(8);
+    while(test.hasNext()){
+      System.out.println(test.next());
+    }
   }
 
 }
