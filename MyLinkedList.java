@@ -111,30 +111,37 @@ public class MyLinkedList<E>{
     current = 0;
   }
 
+  /**A method that sets the iterator to 0 again
+  */
   public void clearIter(){
     current = 0;
   }
 
+  /**A method that returns what index the iterator is
+  @return int
+  */
   public int getCurrent(){
     return current;
   }
 
+  /**A method that checks if the iterator has reached the end of the lsit
+  *@return boolean
+  */
   public boolean hasNext(){
-    if(current < this.size()){
+    if(current < this.size()){ //if it hasn't reached the end
       return true;
     }
     return false;
   }
 
-  public E getatCurrent(){
-    return atCurrent.get();
-  }
-
+  /**A method that returns the object the iterator is on
+  *@return E
+  */
   public E next(){
-    current++;
-    if(current == this.size()){
+    current++; //increase the current index
+    if(current == this.size()){ //if it's at the end, return the data at the end node
       return atCurrent.get();
-    }else{
+    }else{ //otherwise, move on to the next node and return the data of the previous node
       atCurrent = atCurrent.next;
       Node temp = atCurrent.prev;
       return temp.get();
@@ -328,7 +335,7 @@ public class MyLinkedList<E>{
     other.start = null; //make the other list's start and end null
     other.end = null;
     other.current = 0;
-    this.current = 0;
+    this.current = 0; //set up the iterator again
     this.atCurrent = start;
   }
 
