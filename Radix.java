@@ -12,14 +12,13 @@ public class Radix{
     for(int i = 0; i < data.length; i++){
       if(Math.abs(data[i]) > largest) largest = Math.abs(data[i]);
     }
-    //System.out.println("largest: " + largest);
+
     //find the number of digits in the largest number
     int numDigits = 0;
     while(largest > 0){
       numDigits++;
       largest = largest / 10;
     }
-    //System.out.println("numDigits: " + numDigits);
 
     int place = 10;
     MyLinkedList<Integer>[] buckets = new MyLinkedList[20]; //creating buckets
@@ -29,13 +28,10 @@ public class Radix{
     //first round of sorting
     for(int i = 0; i < data.length; i++){
       int temp = Math.abs(data[i] % place); //finding the digit at the ones place
-      //System.out.println("temp@" + i + ": " + temp);
       if(data[i] < 0){ //negative
         buckets[9 - temp].add(data[i]);
-        //System.out.println("list@" + (9-temp) + ": " + list);
       }else{ //positive
         buckets[10 + temp].add(data[i]);
-        //System.out.println("list@" + (10+temp) + ": " + list);
       }
     }
 
@@ -46,12 +42,10 @@ public class Radix{
         first.extend(buckets[i]);
       }
     }
-    //System.out.println("first: " + first);
     numDigits--; //the number of digits left to check decreases
 
     place = place * 10; //increase the digit place
     while(numDigits != 0){
-      //System.out.println("place: " + place);
       buckets = new MyLinkedList[20]; //new buckets made
       for(int i = 0; i < buckets.length; i++){
         buckets[i] = new MyLinkedList<Integer>();
@@ -75,10 +69,8 @@ public class Radix{
         }
       }
       first = newData; //set the new list to first
-      //System.out.println("first: " + first);
       numDigits--; //the number of digits left to check decreases
     }
-    //System.out.println(first);
 
     int index = 0; //copying over to the original array
     while(first.hasNext()){
@@ -94,7 +86,7 @@ public class Radix{
   public static String toString(int[] data){
     String result = "[";
     for(int i = 0; i < data.length; i++){
-      if(i != data.length - 1) result += data[i] + ", ";
+      if(i != data.length - 1) result += data[i] + ", "; //add comma if not the last number
       else result += data[i] + "]";
     }
     return result;
